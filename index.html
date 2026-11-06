@@ -1,0 +1,821 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Геометрия 7 класс: Элементы треугольника</title>
+    <style>
+        :root {
+            --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --secondary-gradient: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            --success-gradient: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            --bg-color: #f0f2f5;
+            --card-bg: rgba(255, 255, 255, 0.85);
+            --text-color: #2d3748;
+            --accent-color: #764ba2;
+            --shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.15);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: var(--primary-gradient);
+            background-attachment: fixed;
+            color: var(--text-color);
+            min-height: 100vh;
+            padding-bottom: 80px;
+        }
+
+        /* Навигация */
+        nav {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            padding: 10px 0;
+        }
+
+        .nav-container {
+            max-width: 800px;
+            margin: 0 auto;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 8px;
+            padding: 0 10px;
+        }
+
+        .nav-btn {
+            background: transparent;
+            border: 2px solid var(--accent-color);
+            color: var(--accent-color);
+            padding: 8px 16px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 14px;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+        }
+
+        .nav-btn:hover, .nav-btn.active {
+            background: var(--accent-color);
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        /* Основной контент */
+        main {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 0 15px;
+        }
+
+        .section {
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .section.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Карточки */
+        .card {
+            background: var(--card-bg);
+            backdrop-filter: blur(8px);
+            border-radius: 20px;
+            padding: 25px;
+            margin-bottom: 20px;
+            box-shadow: var(--shadow);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+        }
+
+        h1 {
+            color: white;
+            text-align: center;
+            font-size: 28px;
+            margin-bottom: 10px;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        }
+
+        h2 {
+            color: var(--accent-color);
+            margin-bottom: 15px;
+            font-size: 22px;
+            border-bottom: 2px solid rgba(118, 75, 162, 0.2);
+            padding-bottom: 8px;
+        }
+
+        h3 {
+            color: #4a5568;
+            margin: 15px 0 10px 0;
+            font-size: 18px;
+        }
+
+        p, li {
+            line-height: 1.6;
+            margin-bottom: 10px;
+            font-size: 16px;
+        }
+
+        ul {
+            padding-left: 20px;
+        }
+
+        .objective-box {
+            background: rgba(255, 255, 255, 0.6);
+            border-left: 4px solid var(--accent-color);
+            padding: 15px;
+            border-radius: 0 10px 10px 0;
+            margin: 20px 0;
+            font-style: italic;
+        }
+
+        /* Теория - визуальные блоки */
+        .concept-card {
+            background: white;
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 15px;
+            border-left: 5px solid;
+            transition: transform 0.2s;
+        }
+
+        .concept-card:hover {
+            transform: translateX(5px);
+        }
+
+        .concept-card.median { border-left-color: #f5576c; }
+        .concept-card.bisector { border-left-color: #4facfe; }
+        .concept-card.altitude { border-left-color: #43e97b; }
+        .concept-card.perp { border-left-color: #fa709a; }
+        .concept-card.midline { border-left-color: #fee140; }
+
+        .concept-title {
+            font-weight: bold;
+            font-size: 18px;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .icon {
+            width: 30px;
+            height: 30px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            color: white;
+            font-weight: bold;
+            font-size: 14px;
+        }
+
+        /* Практикум */
+        .practice-step {
+            background: white;
+            padding: 15px;
+            border-radius: 12px;
+            margin-bottom: 15px;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: 2px solid transparent;
+        }
+
+        .practice-step:hover {
+            border-color: var(--accent-color);
+        }
+
+        .practice-step.hidden-answer .answer {
+            display: none;
+        }
+
+        .practice-step .answer {
+            margin-top: 10px;
+            padding: 10px;
+            background: #f0fff4;
+            border-radius: 8px;
+            color: #22543d;
+            border-left: 3px solid #48bb78;
+        }
+
+        .toggle-btn {
+            background: var(--secondary-gradient);
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 14px;
+            margin-top: 10px;
+        }
+
+        /* Тест */
+        .question-block {
+            background: white;
+            padding: 20px;
+            border-radius: 15px;
+            margin-bottom: 20px;
+        }
+
+        .question-text {
+            font-weight: 600;
+            margin-bottom: 15px;
+            font-size: 17px;
+        }
+
+        .options label {
+            display: block;
+            padding: 12px;
+            margin-bottom: 8px;
+            background: #f7fafc;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.2s;
+            border: 2px solid transparent;
+        }
+
+        .options label:hover {
+            background: #edf2f7;
+            border-color: #cbd5e0;
+        }
+
+        .options input[type="radio"] {
+            margin-right: 10px;
+            transform: scale(1.2);
+        }
+
+        .options input[type="radio"]:checked + span {
+            font-weight: 600;
+            color: var(--accent-color);
+        }
+
+        .btn-primary {
+            background: var(--primary-gradient);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 25px;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 20px;
+            box-shadow: 0 4px 15px rgba(118, 75, 162, 0.4);
+            transition: transform 0.2s;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(118, 75, 162, 0.6);
+        }
+
+        .btn-primary:active {
+            transform: translateY(0);
+        }
+
+        .result-box {
+            display: none;
+            background: white;
+            padding: 25px;
+            border-radius: 20px;
+            text-align: center;
+            margin-top: 20px;
+            box-shadow: var(--shadow);
+        }
+
+        .score-display {
+            font-size: 48px;
+            font-weight: bold;
+            background: var(--success-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin: 15px 0;
+        }
+
+        .feedback-item {
+            text-align: left;
+            padding: 10px;
+            margin: 5px 0;
+            border-radius: 8px;
+            font-size: 15px;
+        }
+
+        .correct { background: #c6f6d5; color: #22543d; }
+        .incorrect { background: #fed7d7; color: #742a2a; }
+
+        /* Рефлексия */
+        .reflection-form textarea {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #e2e8f0;
+            border-radius: 12px;
+            font-size: 16px;
+            resize: vertical;
+            min-height: 100px;
+            margin-bottom: 15px;
+            font-family: inherit;
+        }
+
+        .reflection-form textarea:focus {
+            outline: none;
+            border-color: var(--accent-color);
+        }
+
+        .mood-selector {
+            display: flex;
+            justify-content: space-around;
+            margin: 20px 0;
+            font-size: 32px;
+        }
+
+        .mood-option {
+            cursor: pointer;
+            opacity: 0.5;
+            transition: all 0.3s;
+            transform: scale(1);
+        }
+
+        .mood-option:hover, .mood-option.selected {
+            opacity: 1;
+            transform: scale(1.3);
+        }
+
+        /* Домашнее задание */
+        .hw-box {
+            background: linear-gradient(135deg, #fff5f5 0%, #fed7d7 100%);
+            border: 2px dashed #f56565;
+            border-radius: 15px;
+            padding: 25px;
+            text-align: center;
+        }
+
+        .hw-box h3 {
+            color: #c53030;
+            font-size: 24px;
+            margin-bottom: 15px;
+        }
+
+        .hw-task {
+            background: white;
+            padding: 15px;
+            border-radius: 10px;
+            margin: 10px 0;
+            font-size: 18px;
+            font-weight: 600;
+            color: #2d3748;
+        }
+
+        /* Адаптивность */
+        @media (max-width: 600px) {
+            h1 { font-size: 24px; }
+            .nav-btn { 
+                font-size: 13px; 
+                padding: 6px 12px; 
+            }
+            .card { padding: 20px; }
+            .mood-selector { font-size: 28px; }
+        }
+
+        /* SVG иконки */
+        .svg-icon {
+            width: 40px;
+            height: 40px;
+            margin-right: 10px;
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <div class="nav-container">
+            <button class="nav-btn active" onclick="showSection('home')">Главная</button>
+            <button class="nav-btn" onclick="showSection('theory')">Теория</button>
+            <button class="nav-btn" onclick="showSection('practice')">Практикум</button>
+            <button class="nav-btn" onclick="showSection('test')">Тесты</button>
+            <button class="nav-btn" onclick="showSection('reflection')">Рефлексия</button>
+            <button class="nav-btn" onclick="showSection('homework')">ДЗ</button>
+        </div>
+    </nav>
+
+    <main>
+        <h1>📐 Элементы треугольника</h1>
+
+        <!-- Главная страница -->
+        <section id="home" class="section active">
+            <div class="card">
+                <h2>Добро пожаловать на урок геометрии!</h2>
+                <p>Это интерактивное приложение поможет тебе изучить важные элементы треугольника.</p>
+                
+                <div class="objective-box">
+                    <strong>Цель урока (7.1.1.12):</strong><br>
+                    Знать определение медианы, биссектрисы, высоты, серединного перпендикуляра и средней линии треугольника и уметь изображать их.
+                </div>
+
+                <h3>📱 Как пользоваться приложением:</h3>
+                <ul>
+                    <li><strong>Теория:</strong> Изучи определения и свойства с наглядными схемами.</li>
+                    <li><strong>Практикум:</strong> Проверь себя, открывая подсказки по построению.</li>
+                    <li><strong>Тесты:</strong> Пройди тест из 10 вопросов для самопроверки.</li>
+                    <li><strong>Рефлексия:</strong> Поделись впечатлениями об уроке.</li>
+                    <li><strong>ДЗ:</strong> Запиши домашнее задание в дневник.</li>
+                </ul>
+                
+                <button class="btn-primary" onclick="showSection('theory')">Начать изучение ➡️</button>
+            </div>
+        </section>
+
+        <!-- Теория -->
+        <section id="theory" class="section">
+            <div class="card">
+                <h2>📚 Основные определения</h2>
+                
+                <div class="concept-card median">
+                    <div class="concept-title">
+                        <span class="icon" style="background: #f5576c;">М</span>
+                        Медиана треугольника
+                    </div>
+                    <p>Это отрезок, соединяющий <strong>вершину</strong> треугольника с <strong>серединой противоположной стороны</strong>.</p>
+                    <p><em>Свойство:</em> В любом треугольнике медианы пересекаются в одной точке и делятся ею в отношении 2:1, считая от вершины.</p>
+                </div>
+
+                <div class="concept-card bisector">
+                    <div class="concept-title">
+                        <span class="icon" style="background: #4facfe;">Б</span>
+                        Биссектриса треугольника
+                    </div>
+                    <p>Это отрезок биссектрисы угла треугольника, соединяющий <strong>вершину</strong> с точкой на <strong>противоположной стороне</strong>.</p>
+                    <p><em>Свойство:</em> Биссектриса делит угол пополам. Все точки биссектрисы равноудалены от сторон угла.</p>
+                </div>
+
+                <div class="concept-card altitude">
+                    <div class="concept-title">
+                        <span class="icon" style="background: #43e97b;">В</span>
+                        Высота треугольника
+                    </div>
+                    <p>Это <strong>перпендикуляр</strong>, проведенный из вершины треугольника к прямой, содержащей <strong>противоположную сторону</strong>.</p>
+                    <p><em>Свойство:</em> В остроугольном треугольнике высоты пересекаются внутри него, в тупоугольном – вне его.</p>
+                </div>
+
+                <div class="concept-card perp">
+                    <div class="concept-title">
+                        <span class="icon" style="background: #fa709a;">СП</span>
+                        Серединный перпендикуляр
+                    </div>
+                    <p>Это прямая, проходящая через <strong>середину отрезка</strong> перпендикулярно к нему.</p>
+                    <p><em>Свойство:</em> Каждая точка серединного перпендикуляра равноудалена от концов этого отрезка.</p>
+                </div>
+
+                <div class="concept-card midline">
+                    <div class="concept-title">
+                        <span class="icon" style="background: #fee140; color: #333;">СЛ</span>
+                        Средняя линия треугольника
+                    </div>
+                    <p>Это отрезок, соединяющий <strong>середины двух сторон</strong> треугольника.</p>
+                    <p><em>Свойство:</em> Средняя линия параллельна одной из сторон и равна её половине.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Практикум -->
+        <section id="practice" class="section">
+            <div class="card">
+                <h2>✏️ Интерактивный практикум</h2>
+                <p>Нажми на каждый шаг, чтобы проверить себя или увидеть подсказку по построению.</p>
+
+                <div class="practice-step hidden-answer" onclick="toggleAnswer(this)">
+                    <h3>Шаг 1: Как построить медиану?</h3>
+                    <p>Нажми, чтобы увидеть ответ...</p>
+                    <div class="answer">
+                        1. Найди середину противоположной стороны (с помощью линейки или циркуля).<br>
+                        2. Соедини эту точку с противоположной вершиной отрезком.<br>
+                        3. Обозначь его буквой (например, AM).
+                    </div>
+                </div>
+
+                <div class="practice-step hidden-answer" onclick="toggleAnswer(this)">
+                    <h3>Шаг 2: Как построить высоту в тупоугольном треугольнике?</h3>
+                    <p>Нажми, чтобы увидеть ответ...</p>
+                    <div class="answer">
+                        1. Продли сторону, к которой будешь опускать высоту, пунктирной линией.<br>
+                        2. Из противоположной вершины опусти перпендикуляр на эту продленную прямую.<br>
+                        3. Высота будет находиться <strong>вне</strong> треугольника!
+                    </div>
+                </div>
+
+                <div class="practice-step hidden-answer" onclick="toggleAnswer(this)">
+                    <h3>Шаг 3: Как найти среднюю линию?</h3>
+                    <p>Нажми, чтобы увидеть ответ...</p>
+                    <div class="answer">
+                        1. Отметь середины двух любых сторон треугольника.<br>
+                        2. Соедини эти точки отрезком.<br>
+                        3. Проверь: этот отрезок должен быть параллелен третьей стороне и ровно в 2 раза меньше её.
+                    </div>
+                </div>
+
+                <div class="practice-step hidden-answer" onclick="toggleAnswer(this)">
+                    <h3>Шаг 4: Сколько всего средних линий можно провести в одном треугольнике?</h3>
+                    <p>Нажми, чтобы увидеть ответ...</p>
+                    <div class="answer">
+                        Ровно <strong>3</strong>. Каждая соединяет середины двух сторон. Вместе они образуют внутренний треугольник, подобный исходному с коэффициентом 1/2.
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Тесты -->
+        <section id="test" class="section">
+            <div class="card">
+                <h2>📝 Проверочный тест (10 вопросов)</h2>
+                <p>Выбери один правильный вариант ответа в каждом вопросе.</p>
+                
+                <form id="quizForm">
+                    <!-- Вопросы генерируются JS или прописаны статично для надежности -->
+                    <div class="question-block">
+                        <div class="question-text">1. Что такое медиана треугольника?</div>
+                        <div class="options">
+                            <label><input type="radio" name="q1" value="0"> <span>Перпендикуляр из вершины к противоположной стороне</span></label>
+                            <label><input type="radio" name="q1" value="1"> <span>Отрезок, соединяющий вершину с серединой противоположной стороны</span></label>
+                            <label><input type="radio" name="q1" value="0"> <span>Отрезок, делящий угол пополам</span></label>
+                        </div>
+                    </div>
+
+                    <div class="question-block">
+                        <div class="question-text">2. Сколько медиан в любом треугольнике?</div>
+                        <div class="options">
+                            <label><input type="radio" name="q2" value="0"> <span>1</span></label>
+                            <label><input type="radio" name="q2" value="0"> <span>2</span></label>
+                            <label><input type="radio" name="q2" value="1"> <span>3</span></label>
+                        </div>
+                    </div>
+
+                    <div class="question-block">
+                        <div class="question-text">3. Что такое высота треугольника?</div>
+                        <div class="options">
+                            <label><input type="radio" name="q3" value="1"> <span>Перпендикуляр из вершины к прямой, содержащей противоположную сторону</span></label>
+                            <label><input type="radio" name="q3" value="0"> <span>Отрезок, соединяющий середины двух сторон</span></label>
+                            <label><input type="radio" name="q3" value="0"> <span>Прямая, проходящая через середину стороны</span></label>
+                        </div>
+                    </div>
+
+                    <div class="question-block">
+                        <div class="question-text">4. Где пересекаются высоты остроугольного треугольника?</div>
+                        <div class="options">
+                            <label><input type="radio" name="q4" value="0"> <span>Вне треугольника</span></label>
+                            <label><input type="radio" name="q4" value="1"> <span>Внутри треугольника</span></label>
+                            <label><input type="radio" name="q4" value="0"> <span>На стороне треугольника</span></label>
+                        </div>
+                    </div>
+
+                    <div class="question-block">
+                        <div class="question-text">5. Что такое средняя линия треугольника?</div>
+                        <div class="options">
+                            <label><input type="radio" name="q5" value="0"> <span>Отрезок от вершины до середины противоположной стороны</span></label>
+                            <label><input type="radio" name="q5" value="1"> <span>Отрезок, соединяющий середины двух сторон треугольника</span></label>
+                            <label><input type="radio" name="q5" value="0"> <span>Перпендикуляр к середине стороны</span></label>
+                        </div>
+                    </div>
+
+                    <div class="question-block">
+                        <div class="question-text">6. Каким свойством обладает средняя линия треугольника?</div>
+                        <div class="options">
+                            <label><input type="radio" name="q6" value="0"> <span>Она перпендикулярна третьей стороне</span></label>
+                            <label><input type="radio" name="q6" value="1"> <span>Она параллельна третьей стороне и равна её половине</span></label>
+                            <label><input type="radio" name="q6" value="0"> <span>Она делит угол пополам</span></label>
+                        </div>
+                    </div>
+
+                    <div class="question-block">
+                        <div class="question-text">7. Что такое серединный перпендикуляр?</div>
+                        <div class="options">
+                            <label><input type="radio" name="q7" value="1"> <span>Прямая, проходящая через середину отрезка перпендикулярно к нему</span></label>
+                            <label><input type="radio" name="q7" value="0"> <span>Отрезок из вершины к основанию</span></label>
+                            <label><input type="radio" name="q7" value="0"> <span>Линия, делящая треугольник на два равных</span></label>
+                        </div>
+                    </div>
+
+                    <div class="question-block">
+                        <div class="question-text">8. В каком отношении медианы делятся точкой пересечения (считая от вершины)?</div>
+                        <div class="options">
+                            <label><input type="radio" name="q8" value="0"> <span>1:1</span></label>
+                            <label><input type="radio" name="q8" value="1"> <span>2:1</span></label>
+                            <label><input type="radio" name="q8" value="0"> <span>3:1</span></label>
+                        </div>
+                    </div>
+
+                    <div class="question-block">
+                        <div class="question-text">9. Сколько средних линий можно провести в одном треугольнике?</div>
+                        <div class="options">
+                            <label><input type="radio" name="q9" value="0"> <span>1</span></label>
+                            <label><input type="radio" name="q9" value="0"> <span>2</span></label>
+                            <label><input type="radio" name="q9" value="1"> <span>3</span></label>
+                        </div>
+                    </div>
+
+                    <div class="question-block">
+                        <div class="question-text">10. Биссектриса треугольника делит:</div>
+                        <div class="options">
+                            <label><input type="radio" name="q10" value="0"> <span>Противоположную сторону пополам</span></label>
+                            <label><input type="radio" name="q10" value="1"> <span>Угол треугольника пополам</span></label>
+                            <label><input type="radio" name="q10" value="0"> <span>Треугольник на два равных треугольника</span></label>
+                        </div>
+                    </div>
+
+                    <button type="button" class="btn-primary" onclick="checkTest()">Проверить результаты</button>
+                </form>
+
+                <div id="testResult" class="result-box">
+                    <h3>Твой результат:</h3>
+                    <div class="score-display" id="scoreValue">0/10</div>
+                    <p id="scoreMessage"></p>
+                    <div id="detailedFeedback" style="margin-top: 20px; text-align: left;"></div>
+                    <button class="btn-primary" onclick="resetTest()" style="margin-top: 20px; background: var(--secondary-gradient);">Пройти заново</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Рефлексия -->
+        <section id="reflection" class="section">
+            <div class="card">
+                <h2>🤔 Рефлексия</h2>
+                <p>Подумай о том, как прошел урок. Это поможет тебе лучше запомнить материал!</p>
+                
+                <div class="reflection-form">
+                    <h3>1. Какое у тебя настроение после урока?</h3>
+                    <div class="mood-selector">
+                        <span class="mood-option" onclick="selectMood(this, 'Отлично!')">😄</span>
+                        <span class="mood-option" onclick="selectMood(this, 'Хорошо')">🙂</span>
+                        <span class="mood-option" onclick="selectMood(this, 'Нормально')">😐</span>
+                        <span class="mood-option" onclick="selectMood(this, 'Сложно, но я справлюсь')">😕</span>
+                    </div>
+                    <p id="moodText" style="text-align: center; color: var(--accent-color); font-weight: bold; min-height: 24px;"></p>
+
+                    <h3>2. Что нового ты узнал сегодня? (напиши 1-2 предложения)</h3>
+                    <textarea id="learnedText" placeholder="Например: Я узнал, что медиана делит сторону пополам..."></textarea>
+
+                    <h3>3. Что вызвало затруднение?</h3>
+                    <textarea id="difficultText" placeholder="Например: Путаю высоту и медиану в тупоугольном треугольнике..."></textarea>
+
+                    <button class="btn-primary" onclick="submitReflection()">Отправить учителю (сохранить)</button>
+                    <p id="reflectionSuccess" style="display: none; color: #48bb78; text-align: center; margin-top: 15px; font-weight: bold;">✅ Спасибо! Твоя рефлексия сохранена.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Домашнее задание -->
+        <section id="homework" class="section">
+            <div class="card">
+                <h2>🏠 Домашнее задание</h2>
+                <div class="hw-box">
+                    <h3>📌 Запиши в дневник!</h3>
+                    <div class="hw-task">
+                        1. Выучить теорию (определения медианы, биссектрисы, высоты, серединного перпендикуляра и средней линии).
+                    </div>
+                    <div class="hw-task">
+                        2. Решить в тетради: <strong>стр. 50, упр. 1, 2, 3</strong>.
+                    </div>
+                    <p style="margin-top: 15px; color: #742a2a; font-size: 14px;">
+                        💡 Подсказка: при решении упражнений делай аккуратные чертежи и отмечай на них равные отрезки и углы.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <script>
+        // Навигация
+        function showSection(sectionId) {
+            // Скрыть все секции
+            document.querySelectorAll('.section').forEach(section => {
+                section.classList.remove('active');
+            });
+            
+            // Убрать активный класс у всех кнопок
+            document.querySelectorAll('.nav-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            
+            // Показать нужную секцию
+            document.getElementById(sectionId).classList.add('active');
+            
+            // Подсветить кнопку
+            const buttons = document.querySelectorAll('.nav-btn');
+            const sectionMap = ['home', 'theory', 'practice', 'test', 'reflection', 'homework'];
+            const index = sectionMap.indexOf(sectionId);
+            if (index !== -1) {
+                buttons[index].classList.add('active');
+            }
+            
+            // Прокрутка вверх
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // Практикум: показать/скрыть ответ
+        function toggleAnswer(element) {
+            element.classList.toggle('hidden-answer');
+            const answer = element.querySelector('.answer');
+            const hint = element.querySelector('p');
+            if (element.classList.contains('hidden-answer')) {
+                hint.style.display = 'block';
+                answer.style.display = 'none';
+            } else {
+                hint.style.display = 'none';
+                answer.style.display = 'block';
+            }
+        }
+
+        // Тест: проверка
+        function checkTest() {
+            let score = 0;
+            const totalQuestions = 10;
+            const feedbackDiv = document.getElementById('detailedFeedback');
+            feedbackDiv.innerHTML = '';
+            
+            for (let i = 1; i <= totalQuestions; i++) {
+                const selected = document.querySelector(`input[name="q${i}"]:checked`);
+                const questionBlock = document.querySelector(`input[name="q${i}"]`).closest('.question-block');
+                const questionText = questionBlock.querySelector('.question-text').innerText;
+                
+                if (selected) {
+                    if (selected.value === "1") {
+                        score++;
+                        feedbackDiv.innerHTML += `<div class="feedback-item correct">✅ ${questionText} – Верно!</div>`;
+                    } else {
+                        feedbackDiv.innerHTML += `<div class="feedback-item incorrect">❌ ${questionText} – Ошибка. Попробуй перечитать теорию.</div>`;
+                    }
+                } else {
+                    feedbackDiv.innerHTML += `<div class="feedback-item incorrect">⚠️ ${questionText} – Нет ответа.</div>`;
+                }
+            }
+            
+            document.getElementById('scoreValue').innerText = `${score}/${totalQuestions}`;
+            
+            let message = '';
+            if (score === 10) message = '🏆 Отлично! Ты идеально знаешь тему!';
+            else if (score >= 8) message = '👍 Хороший результат! Есть небольшие пробелы, но в целом всё верно.';
+            else if (score >= 5) message = '📚 Неплохо, но стоит повторить теорию перед домашним заданием.';
+            else message = '💪 Не расстраивайся! Вернись в раздел "Теория" и попробуй снова.';
+            
+            document.getElementById('scoreMessage').innerText = message;
+            document.getElementById('testResult').style.display = 'block';
+            
+            // Прокрутка к результату
+            document.getElementById('testResult').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function resetTest() {
+            document.getElementById('quizForm').reset();
+            document.getElementById('testResult').style.display = 'none';
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // Рефлексия
+        function selectMood(element, moodText) {
+            document.querySelectorAll('.mood-option').forEach(el => el.classList.remove('selected'));
+            element.classList.add('selected');
+            document.getElementById('moodText').innerText = moodText;
+        }
+
+        function submitReflection() {
+            const learned = document.getElementById('learnedText').value;
+            const difficult = document.getElementById('difficultText').value;
+            const mood = document.getElementById('moodText').innerText;
+            
+            if (!mood) {
+                alert('Пожалуйста, выбери своё настроение!');
+                return;
+            }
+            
+            // В реальном приложении здесь был бы fetch() для отправки на сервер
+            // Для GitHub Pages мы имитируем успешное сохранение
+            console.log('Рефлексия:', { mood, learned, difficult });
+            
+            document.getElementById('reflectionSuccess').style.display = 'block';
+            
+            // Очистка формы через 3 секунды
+            setTimeout(() => {
+                document.getElementById('learnedText').value = '';
+                document.getElementById('difficultText').value = '';
+                document.querySelectorAll('.mood-option').forEach(el => el.classList.remove('selected'));
+                document.getElementById('moodText').innerText = '';
+                document.getElementById('reflectionSuccess').style.display = 'none';
+            }, 3000);
+        }
+    </script>
+</body>
+</html>
